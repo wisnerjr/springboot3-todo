@@ -1,22 +1,24 @@
 package com.springboot.todo.models;
 
+import jakarta.validation.constraints.Size;
+
 public class Todo {
 	private int id;
 	private String user;
-	private String desc;
+	@Size(min = 5, message = "Enter at least 5 Characters")
+	private String description;
 	private String targetDate;
-	private boolean isDone;
+	private boolean done;
 
 	public Todo() {
 	}
 
-	public Todo(int id, String user, String desc, String targetDate, boolean isDone) {
-		super();
+	public Todo(int id, String user, String description, String targetDate) {
 		this.id = id;
 		this.user = user;
-		this.desc = desc;
+		this.description = description;
 		this.targetDate = targetDate;
-		this.isDone = isDone;
+		this.done = false;
 	}
 
 	public int getId() {
@@ -27,8 +29,8 @@ public class Todo {
 		return user;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
 	public String getTargetDate() {
@@ -36,7 +38,7 @@ public class Todo {
 	}
 
 	public boolean isDone() {
-		return isDone;
+		return done;
 	}
 
 	public void setId(int id) {
@@ -47,8 +49,8 @@ public class Todo {
 		this.user = user;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public void setTargetDate(String targetDate) {
@@ -56,13 +58,12 @@ public class Todo {
 	}
 
 	public void setDone(boolean isDone) {
-		this.isDone = isDone;
+		this.done = isDone;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Todo [id=%s, user=%s, desc=%s, targetDate=%s, isDone=%s]", id, user, desc, targetDate,
-				isDone);
+		return String.format("Todo [id=%s, user=%s, description=%s, targetDate=%s, isDone=%s]", id, user, description, targetDate, done);
 	}
 
 }

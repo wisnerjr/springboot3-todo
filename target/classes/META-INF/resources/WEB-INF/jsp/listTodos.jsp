@@ -5,6 +5,7 @@
 			<caption>Your todos are</caption>
 			<thead>
 				<tr>
+				    <th>Id</th>
 					<th>Description</th>
 					<th>Target Date</th>
 					<th>Is it Done?</th>
@@ -15,9 +16,10 @@
 			<tbody>
 				<c:forEach items="${todos}" var="todo">
 					<tr>
-						<td>${todo.desc}</td>
+					    <td>${todo.id}</td>
+						<td>${todo.description}</td>
 						<td><fmt:formatDate value="${todo.targetDate}" pattern="dd/MM/yyyy"/></td>
-						<td>${todo.isDone}</td>
+						<td>${todo.done}</td>
 						<td><a type="button" class="btn btn-success"
 							href="/update-todo?id=${todo.id}">Update</a></td>
 						<td><a type="button" class="btn btn-warning"
@@ -27,7 +29,7 @@
 			</tbody>
 		</table>
 		<div>
-			<a class="button" href="/add-todo">Add a Todo</a>
+			<a class="btn btn-success" href="/add-todo">Add Todo</a>
 		</div>
 	</div>
 <%@ include file="common/footer.jspf" %>
