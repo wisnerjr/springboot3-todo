@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +40,23 @@ public class TodoController {
 		}
 		var username = (String)model.get("name");
 		todoService.addTodo(todo.getDescription(), username, todo.getTargetDate());
+		return "redirect:/list-todos";
+	}
+
+	@GetMapping("/update-todo")
+	public String updateTodoPage(@RequestParam int id, ModelMap model) {
+		var todo = todoService.findById(id);
+		if (todo.isPresent()) {
+			model.addAttribute("todo", todo.get());
+			return "todo";
+		}
+		model.put("errorMessage", "Todo not found");
+		return "redirect:/list-todos";
+	}
+
+	@GetMapping("/delete-todo")
+	public String deleteTodoPage(@RequestParam int id) {
+		todoService.deleteTodo(id);
 		return "redirect:/list-todos";
 	}
 }
