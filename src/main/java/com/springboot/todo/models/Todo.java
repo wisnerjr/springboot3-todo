@@ -1,5 +1,10 @@
 package com.springboot.todo.models;
 
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Size;
 
 public class Todo {
@@ -7,13 +12,15 @@ public class Todo {
 	private String user;
 	@Size(min = 5, message = "Enter at least 5 Characters")
 	private String description;
-	private String targetDate;
+//	@Future(message = "Enter a future date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate targetDate;
 	private boolean done;
 
 	public Todo() {
 	}
 
-	public Todo(int id, String user, String description, String targetDate) {
+	public Todo(int id, String user, String description, LocalDate targetDate) {
 		this.id = id;
 		this.user = user;
 		this.description = description;
@@ -33,7 +40,7 @@ public class Todo {
 		return description;
 	}
 
-	public String getTargetDate() {
+	public LocalDate getTargetDate() {
 		return targetDate;
 	}
 
@@ -53,7 +60,7 @@ public class Todo {
 		this.description = description;
 	}
 
-	public void setTargetDate(String targetDate) {
+	public void setTargetDate(LocalDate targetDate) {
 		this.targetDate = targetDate;
 	}
 

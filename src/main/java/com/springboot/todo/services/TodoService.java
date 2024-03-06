@@ -1,5 +1,6 @@
 package com.springboot.todo.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +21,16 @@ public class TodoService {
 		return todos.stream().filter(todo -> todo.getId() == id).findFirst();
 	}
 
-	public Todo addTodo(final String description, final String username,  final String targetDate) {
+	public Todo addTodo(final String description, final String username,  final LocalDate targetDate) {
 		Todo todo = new Todo(getTodoCount()+1, username, description, targetDate);
 		todos.add(todo);
 		return todo;
+	}
+
+	public void updateTodo(final Todo todo) {
+		todos.removeIf(t -> t.getId() == todo.getId());
+		todos.add(todo);
+		todos.sort((t1, t2) -> t1.getId() - t2.getId());
 	}
 
 	public void deleteTodo(final int id) {

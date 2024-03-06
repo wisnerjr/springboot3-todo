@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.todo.models.Todo;
@@ -51,6 +52,16 @@ public class TodoController {
 			return "todo";
 		}
 		model.put("errorMessage", "Todo not found");
+		return "redirect:/list-todos";
+	}
+
+	@PostMapping("/update-todo")
+	public  String updateTodoPage(ModelMap model, @Valid Todo todo, BindingResult result) {
+		if (result.hasErrors()) {
+			return "todo";
+		}
+		todo.setUser((String)model.get("name"));
+		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
 	}
 

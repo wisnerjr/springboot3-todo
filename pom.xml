@@ -58,6 +58,11 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.3.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap-datepicker</artifactId>
+			<version>1.9.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
