@@ -27,13 +27,14 @@
 					<input type="submit" class="btn btn-success"></input>
 				</form:form>
 			</div>
+			<script src="webjars/jquery/3.7.1/jquery.min.js"></script>
 			<script src="webjars/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-            		<script type="text/javascript">
-            			$('#targetDate').datepicker({
-            				format: 'yyyy-mm-dd',
-            				startDate: '-0d'
-            			});
-            		</script>
+            <script type="text/javascript">
+                $('#targetDate').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: '-0d'
+                });
+            </script>
 		</body>
 
 <%@ include file="common/footer.jspf" %>
