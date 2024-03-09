@@ -4,12 +4,11 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Size;
 
 public class Todo {
 	private int id;
-	private String user;
+	private String username;
 	@Size(min = 5, message = "Enter at least 5 Characters")
 	private String description;
 //	@Future(message = "Enter a future date")
@@ -20,9 +19,9 @@ public class Todo {
 	public Todo() {
 	}
 
-	public Todo(int id, String user, String description, LocalDate targetDate) {
+	public Todo(int id, String username, String description, LocalDate targetDate) {
 		this.id = id;
-		this.user = user;
+		this.username = username;
 		this.description = description;
 		this.targetDate = targetDate;
 		this.done = false;
@@ -32,8 +31,8 @@ public class Todo {
 		return id;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getDescription() {
@@ -52,8 +51,8 @@ public class Todo {
 		this.id = id;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public void setDescription(String description) {
@@ -70,7 +69,7 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		return String.format("Todo [id=%s, user=%s, description=%s, targetDate=%s, isDone=%s]", id, user, description, targetDate, done);
+		return String.format("Todo [id=%s, user=%s, description=%s, targetDate=%s, isDone=%s]", id, username, description, targetDate, done);
 	}
 
 }

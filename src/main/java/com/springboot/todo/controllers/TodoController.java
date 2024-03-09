@@ -1,30 +1,32 @@
 package com.springboot.todo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.todo.models.Todo;
+import com.springboot.todo.security.AuthorizationService;
 import com.springboot.todo.services.TodoService;
 import jakarta.validation.Valid;
 
 @Controller
 public class TodoController {
+	private final AuthorizationService authorizationService;
 	private final TodoService todoService;
 
-	public TodoController(final TodoService todoService) {
+	public TodoController(final AuthorizationService authorizationService, final TodoService todoService) {
+		this.authorizationService = authorizationService;
 		this.todoService = todoService;
 	}
 
 	@GetMapping("/list-todos")
 	public String listTodosPage(ModelMap model) {
-		model.put("todos", todoService.findByUsername("admin"));
+//		var username = (String)model.get("name");
+		var username = authorizationService.getLoggedInUserName();
+		model.put("todos", todoService.findByUsername(username));
 		return "listTodos";
 	}
 
@@ -39,7 +41,8 @@ public class TodoController {
 		if (result.hasErrors()) {
 			return "todo";
 		}
-		var username = (String)model.get("name");
+//		var username = (String)model.get("name");
+		var username = authorizationService.getLoggedInUserName();
 		todoService.addTodo(todo.getDescription(), username, todo.getTargetDate());
 		return "redirect:/list-todos";
 	}
@@ -60,7 +63,7 @@ public class TodoController {
 		if (result.hasErrors()) {
 			return "todo";
 		}
-		todo.setUser((String)model.get("name"));
+		todo.setUsername((String)model.get("name"));
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
 	}

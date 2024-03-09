@@ -14,7 +14,7 @@ public class TodoService {
 	private final static List<Todo> todos = new ArrayList<>();
 
 	public List<Todo> findByUsername(final String username) {
-		return todos;
+		return todos.stream().filter(todo -> todo.getUsername().equals(username)).toList();
 	}
 
 	public Optional<Todo> findById(final int id) {
