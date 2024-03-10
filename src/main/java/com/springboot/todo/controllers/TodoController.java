@@ -24,7 +24,6 @@ public class TodoController {
 
 	@GetMapping("/list-todos")
 	public String listTodosPage(ModelMap model) {
-//		var username = (String)model.get("name");
 		var username = authorizationService.getLoggedInUserName();
 		model.put("todos", todoService.findByUsername(username));
 		return "listTodos";
@@ -41,9 +40,9 @@ public class TodoController {
 		if (result.hasErrors()) {
 			return "todo";
 		}
-//		var username = (String)model.get("name");
+
 		var username = authorizationService.getLoggedInUserName();
-		todoService.addTodo(todo.getDescription(), username, todo.getTargetDate());
+		todoService.addTodo(todo, username);
 		return "redirect:/list-todos";
 	}
 
@@ -59,11 +58,12 @@ public class TodoController {
 	}
 
 	@PostMapping("/update-todo")
-	public  String updateTodoPage(ModelMap model, @Valid Todo todo, BindingResult result) {
+	public  String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
 		if (result.hasErrors()) {
 			return "todo";
 		}
-		todo.setUsername((String)model.get("name"));
+		var username = authorizationService.getLoggedInUserName();
+		todo.setUsername(username);
 		todoService.updateTodo(todo);
 		return "redirect:/list-todos";
 	}

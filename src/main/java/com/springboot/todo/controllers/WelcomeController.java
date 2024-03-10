@@ -21,14 +21,7 @@ public class WelcomeController {
 	public String goToWelcomePage(ModelMap model) {
 		var username = authorizationService.getLoggedInUserName();
 
-//		model.put("username", getLoggedInUserName());
 		model.put("username", username);
 		return "welcome";
 	}
-
-//	private String getLoggedInUserName() {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		return authentication.getName();
-//	}
-
 }

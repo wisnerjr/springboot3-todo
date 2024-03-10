@@ -8,37 +8,43 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.springboot.todo.models.Todo;
+import com.springboot.todo.repositories.TodoRepository;
 
 @Service
 public class TodoService {
 	private final static List<Todo> todos = new ArrayList<>();
 
+	private final TodoRepository todoRepository;
+
+	public TodoService(final TodoRepository todoRepository) {
+		this.todoRepository = todoRepository;
+	}
+
 	public List<Todo> findByUsername(final String username) {
-		return todos.stream().filter(todo -> todo.getUsername().equals(username)).toList();
+		var todos = todoRepository.findByUsername(username);
+		todos.sort((t1, t2) -> Math.toIntExact(t1.getId() - t2.getId()));
+		return todos;
 	}
 
-	public Optional<Todo> findById(final int id) {
-		return todos.stream().filter(todo -> todo.getId() == id).findFirst();
+	public Optional<Todo> findById(final long id) {
+		return todoRepository.findById(id);
 	}
 
-	public Todo addTodo(final String description, final String username,  final LocalDate targetDate) {
-		Todo todo = new Todo(getTodoCount()+1, username, description, targetDate);
-		todos.add(todo);
-		return todo;
+	public Todo addTodo(final Todo todo, final String username) {
+		todo.setUsername(username);
+		return todoRepository.save(todo);
 	}
 
 	public void updateTodo(final Todo todo) {
-		todos.removeIf(t -> t.getId() == todo.getId());
-		todos.add(todo);
-		todos.sort((t1, t2) -> t1.getId() - t2.getId());
+		todoRepository.save(todo);
 	}
 
-	public void deleteTodo(final int id) {
-		todos.removeIf(todo -> todo.getId() == id);
+	public void deleteTodo(final long id) {
+		todoRepository.deleteById(id);
 	}
 
-	private int getTodoCount() {
-		return todos.size();
+	private long getTodoCount() {
+		return todoRepository.count();
 	}
 
 }

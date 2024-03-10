@@ -4,14 +4,19 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class Todo {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private String username;
 	@Size(min = 5, message = "Enter at least 5 Characters")
 	private String description;
-//	@Future(message = "Enter a future date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate targetDate;
 	private boolean done;
@@ -19,7 +24,7 @@ public class Todo {
 	public Todo() {
 	}
 
-	public Todo(int id, String username, String description, LocalDate targetDate) {
+	public Todo(long id, String username, String description, LocalDate targetDate) {
 		this.id = id;
 		this.username = username;
 		this.description = description;
@@ -27,7 +32,7 @@ public class Todo {
 		this.done = false;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -47,7 +52,7 @@ public class Todo {
 		return done;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
